@@ -70,3 +70,4 @@ export const activarCasa = async(req, res)=>{
         res.status(500).json(error);
     }
 }
+  

@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { crearUsuario, auchUsuarios, validarSesion, actualizarUsuario, verCasas, alquilarCasas } from '../controllers/usuario.controlers.js';
+import { crearUsuario, auchUsuarios, validarSesion, actualizarUsuario, verCasas, alquilarCasas, filtrarPorZona } from '../controllers/usuario.controlers.js';
 import { veryToken } from '../middleware/jsonwebtoken.js';
 import multer from 'multer';
 import { storage } from '../middleware/clodinary.js';
@@ -19,5 +19,6 @@ router.put("/usuarios/:id", inputAc, actualizarUsuario);
 
 router.get("/casasDisponibles", verCasas);
 router.post("/casasDisponibles", alquilarCasas);
+router.get("/casasDisponibles/:zona", filtrarPorZona);
 
 export default router;

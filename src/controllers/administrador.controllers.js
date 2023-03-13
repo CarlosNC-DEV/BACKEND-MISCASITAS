@@ -1,4 +1,5 @@
 import Administrador from '../models/Administrador.js';
+import Casas from '../models/Casas.js';
 import jwt from 'jsonwebtoken';
 import { JWT_SECRET } from '../config.js';
 import bcryptjs from 'bcryptjs';
@@ -64,6 +65,20 @@ export const validarSesion = async(req, res)=>{
 
         res.json({_id: administrador._id, usuario: administrador.usuario, correo: administrador.correo, monto: administrador.monto });
 
+    } catch (error) {
+        console.log(error);
+        res.status(500).json(error);
+    }
+}
+
+export const verCasasEstado = async(req, res)=>{
+    try {
+        const { estado } = req.params;
+        const casas = await Casas.find({ ["estado." + estado]: true }).lean();
+        if(!casas){
+            return res.status(400).json("No Existen Alquileres")
+        }
+        res.status(200).json(casas);
     } catch (error) {
         console.log(error);
         res.status(500).json(error);

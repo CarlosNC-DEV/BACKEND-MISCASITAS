@@ -168,3 +168,17 @@ export const alquilarCasas = async(req, res)=>{
         res.status(500).json(error);
     }
 }
+
+export const filtrarPorZona = async (req, res) => {
+    const { zona } = req.params;
+    try {
+      const casa = await Casas.find({ 'estado.desactivado': false, 'estado.alquilado': false, zona: zona });
+      if(!casa){
+        return res.status(400).json("No existe una casa")
+      }
+      res.status(200).json(casa);
+    } catch (error) {
+      console.log(error);
+      res.status(500).json(error);
+    }
+  };
