@@ -71,6 +71,7 @@ export const validarSesion = async(req, res)=>{
     }
 }
 
+
 export const verCasasEstado = async(req, res)=>{
     try {
         const { estado } = req.params;
