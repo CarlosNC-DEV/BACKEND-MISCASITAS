@@ -1,4 +1,5 @@
 import Casas from '../models/Casas.js';
+import cloudinary from 'cloudinary';
 
 export const verCasas = async(req, res)=>{
     try {
@@ -19,11 +20,26 @@ export const crearCasa = async(req, res)=>{
         if(!zona || !direccion || !costoAlquiler || !ancho || !largo || !numPisos || !capacidadPersona || !categoria || !descripcion){
             return res.status(400).json("Todos los datos son requeridos");
         }
+
+        let idImgAlquiler;
+        let urlImgAlquiler;
+
+        if(req.files.fotoAlquiler){
+            const result = await cloudinary.uploader.upload(req.files.fotoAlquiler[0].path);
+            idImgAlquiler = result.public_id;
+            urlImgAlquiler = result.secure_url;
+        }else{
+            return res.status(400).json("Se requiere imagen de foto de perfil");
+        }
+
         const casaModel = new Casas(req.body);
         casaModel.medidas.ancho = ancho;
         casaModel.medidas.largo = largo;
+        casaModel.imgCasa.idImg = idImgAlquiler;
+        casaModel.imgCasa.urlImg = urlImgAlquiler;
 
         await casaModel.save();
+        
         res.status(200).json("Nuevo alquiler creado correctamente");
     } catch (error) {
         console.log(error);

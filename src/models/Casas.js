@@ -3,6 +3,14 @@ const ObjectId = Schema.ObjectId;
 
 const casaSchema = new Schema(
     {
+        imgCasa:{
+            idImg:{
+                type: String
+            },
+            urlImg:{
+                type: String
+            }
+        },
         zona:{
             type: String
         },
